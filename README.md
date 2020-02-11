@@ -14,3 +14,10 @@ GARO currently supports listing a page of organization repositories.
 export GH_TOKEN=MYDUMMYPERSONALGHTOKEN
 ./garo my-gh-organization
 ```
+
+## Test
+
+```bash
+export GH_TOKEN=MYDUMMYPERSONALGHTOKEN
+go test -v ./...
+```
