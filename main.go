@@ -4,6 +4,8 @@ import (
 	"context"
 	"log"
 	"os"
+
+	"github.com/philips-labs/garo/github"
 )
 
 func main() {
@@ -17,8 +19,8 @@ func main() {
 	}
 
 	ctx := context.Background()
-	oauthClient := PersonalAccessToken(ctx, token)
-	client := NewClient(oauthClient)
+	oauthClient := github.PersonalAccessToken(ctx, token)
+	client := github.NewClient(oauthClient)
 
 	repos, _, err := client.Repositories.ListByOrg(ctx, args[0], nil)
 	dieOnErr("Failed listing repos: %s", err)
