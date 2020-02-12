@@ -26,19 +26,19 @@ func main() {
 	dieOnErr("Failed listing repos: %s", err)
 	printJSON("Repositories: %s\n", repos)
 
-	runners, _, err := client.ListActionsRunners(ctx, args[0], args[1])
+	runners, _, err := client.Actions.ListRunners(ctx, args[0], args[1])
 	dieOnErr("Failed listing runners: %s", err)
 	printJSON("Runners: %s\n", runners)
 
-	downloads, _, err := client.ListActionsRunnersDownloads(ctx, args[0], args[1])
+	downloads, _, err := client.Actions.ListRunnersDownloads(ctx, args[0], args[1])
 	dieOnErr("Failed listing runner downloads: %s", err)
 	printJSON("Runner downloads: %s\n", downloads)
 
-	registrationToken, _, err := client.CreateActionRunnersRegistrationToken(ctx, args[0], args[1])
+	registrationToken, _, err := client.Actions.CreateRunnersRegistrationToken(ctx, args[0], args[1])
 	dieOnErr("Failed creating registration token: %s", err)
 	printJSON("Create token: %s\n", registrationToken)
 
-	removeToken, _, err := client.CreateActionRunnersRemoveToken(ctx, args[0], args[1])
+	removeToken, _, err := client.Actions.CreateRunnersRemoveToken(ctx, args[0], args[1])
 	dieOnErr("Failed creating remove token: %s", err)
 	printJSON("Remove token: %s\n", removeToken)
 }
