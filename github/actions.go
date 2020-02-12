@@ -72,7 +72,7 @@ func (c *Client) ListActionsRunnersDownloads(ctx context.Context, owner, repo st
 
 // CreateActionRunnersRegistrationToken Returns a token that you can pass to the config script. The token expires after one hour. Anyone with admin access to the repository can use this endpoint. GitHub Apps must have the administration permission to use this endpoint.
 func (c *Client) CreateActionRunnersRegistrationToken(ctx context.Context, owner, repo string) (*ActionsToken, *github.Response, error) {
-	return c.CreateActionRunnersTokenRequest(ctx, owner, repo, "create")
+	return c.CreateActionRunnersTokenRequest(ctx, owner, repo, "registration")
 }
 
 // CreateActionRunnersRemoveToken Returns a token that you can pass to remove a self-hosted runner from a repository. The token expires after one hour. Anyone with admin access to the repository can use this endpoint. GitHub Apps must have the administration permission to use this endpoint.
