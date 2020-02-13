@@ -5,8 +5,6 @@ import (
 	"log"
 	"os"
 
-	gh "github.com/google/go-github/v29/github"
-
 	"github.com/philips-labs/garo/filter"
 	"github.com/philips-labs/garo/github"
 )
@@ -30,10 +28,11 @@ func main() {
 
 	repos, _, err := client.Repositories.ListByOrg(ctx, org, nil)
 	dieOnErr("Failed listing repos: %s", err)
-	filtered := filter.Repositories(repos, func(r gh.Repository) bool {
-		return r.GetLanguage() == "Go"
-	})
+	filtered := filter.Repositories(repos, filter.ByLanguage("go"))
 	printJSON("Go Repositories: %s\n", filtered)
+
+	factService := filter.Repositories(repos, filter.ByName(repo))[0]
+	printJSON(repo+" Repository: %s\n", factService)
 
 	runners, _, err := client.Actions.ListRunners(ctx, org, repo)
 	dieOnErr("Failed listing runners: %s", err)

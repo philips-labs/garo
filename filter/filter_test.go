@@ -34,15 +34,10 @@ func TestFilterRepositories(t *testing.T) {
 	repos, _, err := client.Repositories.ListByOrg(ctx, org, &gh.RepositoryListByOrgOptions{Type: "public"})
 	assert.NoError(err, "Failed listing repositories for %s", org)
 
-	filtered := filter.Repositories(repos, func(r gh.Repository) bool {
-		return r.GetLanguage() == "Go"
-	})
+	filtered := filter.Repositories(repos, filter.ByLanguage("go"))
 	assert.NotEmpty(filtered, "Expected to have a bunch of public repositories with language 'Go'.")
 	assert.NotEqual(len(repos), len(filtered), "Expected to have less repositories after applying language filter")
 
-	filtered = filter.Repositories(repos, func(r gh.Repository) bool {
-		return *r.Name == "garo"
-	})
-
+	filtered = filter.Repositories(repos, filter.ByName("garo"))
 	assert.Len(filtered, 1)
 }
