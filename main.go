@@ -54,7 +54,9 @@ func main() {
 	dieOnErr("Failed listing workflows: %s", err)
 	printJSON("Workflows: %s\n", workflows)
 
-	workflow, _, err := client.Actions.GetWorkflowByFileName(ctx, org, repo, "run.yml")
-	dieOnErr("Failed getting workflow by filename: %s", err)
-	printJSON("Workflow: %s\n", workflow)
+	if workflows.TotalCount > 0 {
+		workflow, _, err := client.Actions.GetWorkflowByID(ctx, org, repo, workflows.Workflows[0].ID)
+		dieOnErr("Failed getting workflow by ID: %s", err)
+		printJSON("Workflow: %s\n", workflow)
+	}
 }
