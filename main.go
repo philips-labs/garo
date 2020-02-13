@@ -44,4 +44,12 @@ func main() {
 	removeToken, _, err := client.Actions.CreateRunnersRemoveToken(ctx, org, repo)
 	dieOnErr("Failed creating remove token: %s", err)
 	printJSON("Remove token: %s\n", removeToken)
+
+	workflows, _, err := client.Actions.ListWorkflows(ctx, org, repo, nil)
+	dieOnErr("Failed listing workflows: %s", err)
+	printJSON("Workflows: %s\n", workflows)
+
+	workflow, _, err := client.Actions.GetWorkflowByFileName(ctx, org, repo, "run.yml")
+	dieOnErr("Failed getting workflow by filename: %s", err)
+	printJSON("Workflow: %s\n", workflow)
 }
