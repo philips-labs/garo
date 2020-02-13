@@ -1,5 +1,8 @@
 # Github actions runners orchestrator
 
+![CI](https://github.com/philips-labs/garo/workflows/CI/badge.svg)
+[![codecov](https://codecov.io/gh/philips-labs/garo/branch/develop/graph/badge.svg)](https://codecov.io/gh/philips-labs/garo)
+
 GitHub allows developers to run GitHub Actions workflows on your own runners. This tool allows you to deploy self hosted runners for your repositories.
 
 ## Important notes
