@@ -2,8 +2,11 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"log"
 	"os"
+
+	gh "github.com/google/go-github/v29/github"
 
 	"github.com/philips-labs/garo/filter"
 	"github.com/philips-labs/garo/github"
@@ -59,4 +62,9 @@ func main() {
 		dieOnErr("Failed getting workflow by ID: %s", err)
 		printJSON("Workflow: %s\n", workflow)
 	}
+
+	payload := json.RawMessage(`{"text":"Running manual workflow"}`)
+	wfrepo, _, err := client.Repositories.Dispatch(ctx, org, repo, gh.DispatchRequestOptions{EventType: "run-workflow", ClientPayload: &payload})
+	dieOnErr("Failed dispatching repository: %s", err)
+	printJSON("Dispatched "+org+"/"+repo+": %s\n", wfrepo)
 }
