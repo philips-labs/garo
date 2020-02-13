@@ -24,3 +24,9 @@ export GH_TOKEN=MYDUMMYPERSONALGHTOKEN
 export GH_TOKEN=MYDUMMYPERSONALGHTOKEN
 go test -v ./...
 ```
+
+To run the tests from *VSCode* you will have to copy the `.env.example` and fill out your personal Github Token.
+
+```shell
+cp .env.example .env
+```
