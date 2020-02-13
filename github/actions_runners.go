@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/google/go-github/github"
+	"github.com/google/go-github/v29/github"
 )
 
 // Runner represents a self hosted runner object
