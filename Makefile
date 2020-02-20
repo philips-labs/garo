@@ -11,7 +11,7 @@ DIAGRAMS_SRC := $(wildcard docs/diagrams/*.plantuml)
 DIAGRAMS_PNG := $(addsuffix .png, $(basename $(DIAGRAMS_SRC)))
 DIAGRAMS_SVG := $(addsuffix .svg, $(basename $(DIAGRAMS_SRC)))
 
-.PHONY: help clean clean-diagrams clean-binaries diagrams png-diagrams svg-diagrams compile compile-agent compile-server
+.PHONY: help clean clean-diagrams clean-binaries diagrams png-diagrams svg-diagrams compile compile-agent compile-server test test-cover
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
 
@@ -48,3 +48,11 @@ bin/garo-agent:
 bin/garo-server:
 	@echo Compiling $@...
 	@go build -a ${GO_LDFLAGS} -o $@ ./cmd/garo-server
+
+test: ## Run tests
+	@echo Running tests...
+	@go test -v -race -count=1 ./...
+
+test-cover: ## Run tests and coverage
+	@echo Running tests and coverage...
+	@go test -v -race -count=1 -covermode=atomic -coverprofile=coverage.out ./...

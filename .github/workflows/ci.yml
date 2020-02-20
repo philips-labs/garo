@@ -26,12 +26,12 @@ jobs:
         run: go mod download
 
       - name: Build
-        run: go build -v .
+        run: make compile
 
       - name: Test and Cover
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: go test -v -race -count=1 -covermode=atomic -coverprofile=coverage.out ./...
+        run: make test-cover
 
       - name: Upload Code Coverage
         uses: codecov/codecov-action@v1

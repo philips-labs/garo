@@ -4,3 +4,4 @@ plantuml.jar
 bin/
 ./garo-agent
 ./garo-server
+coverage.out
