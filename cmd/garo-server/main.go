@@ -14,6 +14,14 @@ var (
 )
 
 func main() {
+	initVersionCommander()
+	if err := rootCmd.Execute(); err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+}
+
+func initVersionCommander() {
 	v := cmd.VersionInfo{
 		Version: version,
 		Commit:  commit,
@@ -21,8 +29,4 @@ func main() {
 	}
 
 	versionCommander = cmd.NewVersionCommander(v)
-	if err := rootCmd.Execute(); err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
 }

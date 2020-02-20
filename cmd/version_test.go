@@ -9,6 +9,7 @@ import (
 	"github.com/stretchr/testify/assert"
 
 	"github.com/philips-labs/garo/cmd"
+	"github.com/philips-labs/garo/cmd/test"
 )
 
 func TestParseDateUnknown(t *testing.T) {
@@ -32,6 +33,7 @@ func TestParseDateNonRFC3339(t *testing.T) {
 }
 
 func TestVersionCommands(t *testing.T) {
+	assert := assert.New(t)
 	version := cmd.VersionInfo{
 		Version: "test",
 		Commit:  "ab23f6",
@@ -51,14 +53,8 @@ func TestVersionCommands(t *testing.T) {
   date:     %s
 
 `, rootCmd.Short, version.Version, version.Commit, version.Date.Format(time.RFC3339))
-	args := []string{"version"}
 
-	for _, arg := range args {
-		t.Run(arg, func(tt *testing.T) {
-			output, err := executeCommand(rootCmd, arg)
-			assert := assert.New(tt)
-			assert.NoError(err)
-			assert.Equal(exp, output)
-		})
-	}
+	output, err := test.ExecuteCommand(rootCmd, "version")
+	assert.NoError(err)
+	assert.Equal(exp, output)
 }
