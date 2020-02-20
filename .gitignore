@@ -1,3 +1,6 @@
 garo
 .env
 plantuml.jar
+bin/
+./garo-agent
+./garo-server
