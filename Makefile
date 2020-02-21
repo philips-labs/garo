@@ -11,7 +11,7 @@ DIAGRAMS_SRC := $(wildcard docs/diagrams/*.plantuml)
 DIAGRAMS_PNG := $(addsuffix .png, $(basename $(DIAGRAMS_SRC)))
 DIAGRAMS_SVG := $(addsuffix .svg, $(basename $(DIAGRAMS_SRC)))
 
-.PHONY: help clean clean-diagrams clean-binaries diagrams png-diagrams svg-diagrams compile compile-agent compile-server test test-cover
+.PHONY: help clean clean-diagrams clean-binaries diagrams png-diagrams svg-diagrams compile compile-agent compile-server test test-cover coverage-out coverage-html
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
 
@@ -56,3 +56,10 @@ test: ## Run tests
 test-cover: ## Run tests and coverage
 	@echo Running tests and coverage...
 	@go test -v -race -count=1 -covermode=atomic -coverprofile=coverage.out ./...
+
+coverage-out: test-cover ## Show coverage in cli
+	@echo Coverage details
+	@go tool cover -func=coverage.out
+
+coverage-html: test-cover ## Show coverage in browser
+	@go tool cover -html=coverage.out
