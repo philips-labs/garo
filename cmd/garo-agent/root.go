@@ -37,6 +37,11 @@ func init() {
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.garo.yaml)")
 
 	rootCmd.Flags().BoolP("version", "v", false, "shows version information")
+
+	configCommander := &cmd.ConfigCommander{}
+	configCommander.AddToCommand(rootCmd)
+
+	initVersionCommander()
 	versionCommander.AddToCommand(rootCmd)
 }
 
@@ -51,6 +56,8 @@ func initConfig() {
 		}
 
 		viper.AddConfigPath(home)
+		viper.SetEnvPrefix("garo")
+		viper.BindEnv("gh_token")
 		viper.SetConfigName(".garo")
 	}
 

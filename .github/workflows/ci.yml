@@ -30,7 +30,7 @@ jobs:
 
       - name: Test and Cover
         env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GARO_GH_TOKEN: ${{ secrets.GARO_GH_TOKEN }}
         run: make test-cover
 
       - name: Upload Code Coverage

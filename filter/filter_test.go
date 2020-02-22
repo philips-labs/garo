@@ -19,9 +19,9 @@ var (
 )
 
 func init() {
-	token := os.Getenv("GH_TOKEN")
+	token := os.Getenv("GARO_GH_TOKEN")
 	if token == "" {
-		log.Fatal("You need to export the environment variable GH_TOKEN")
+		log.Fatal("You need to export the environment variable GARO_GH_TOKEN")
 	}
 	ctx = context.Background()
 	oauthClient := github.PersonalAccessToken(ctx, token)
