@@ -6,6 +6,7 @@
     "ms-vscode.go",
     "jebbs.plantuml",
     "editorconfig.editorconfig",
-    "davidanson.vscode-markdownlint"
+    "davidanson.vscode-markdownlint",
+    "zxh404.vscode-proto3"
   ]
 }

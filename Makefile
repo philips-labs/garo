@@ -10,6 +10,7 @@ PLANTUML_JAR_URL = https://sourceforge.net/projects/plantuml/files/plantuml.jar/
 DIAGRAMS_SRC := $(wildcard docs/diagrams/*.plantuml)
 DIAGRAMS_PNG := $(addsuffix .png, $(basename $(DIAGRAMS_SRC)))
 DIAGRAMS_SVG := $(addsuffix .svg, $(basename $(DIAGRAMS_SRC)))
+GOPATH := $(word 2, $(subst =, , $(shell go env | grep GOPATH)))
 
 .PHONY: help clean clean-diagrams clean-binaries diagrams png-diagrams svg-diagrams compile compile-agent compile-server test test-cover coverage-out coverage-html
 help:
@@ -63,3 +64,15 @@ coverage-out: test-cover ## Show coverage in cli
 
 coverage-html: test-cover ## Show coverage in browser
 	@go tool cover -html=coverage.out
+
+download: ## Fetches go.mod dependencies via go mod download
+	@go mod download
+
+install-protoc: ## Installs protoc
+	@brew list | grep protobuf > /dev/null && brew upgrade protobuf > /dev/null || brew install protobuf > /dev/null
+
+install-tools: download ## Installs tools from tools.go
+	@cat tools.go | grep _ | awk -F'"' '{print $$2}' | xargs -tI % go install %
+
+proto-gen: ## Generate protocol buffer implementations
+	@protoc --proto_path=$(GOPATH)/pkg/mod:. --twirp_out=. --go_out=. ./rpc/garo/*.proto
