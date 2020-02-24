@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"os"
 
@@ -10,9 +11,13 @@ import (
 	"github.com/spf13/viper"
 
 	"github.com/philips-labs/garo/cmd"
+	"github.com/philips-labs/garo/server"
 )
 
-var cfgFile string
+var (
+	listenAddr string
+	cfgFile    string
+)
 
 var (
 	versionCommander *cmd.VersionCommander
@@ -28,6 +33,15 @@ var (
 				cmd.Println(versionCommander.SprintVersion(cmd))
 				return
 			}
+			ctx, cancel := context.WithCancel(context.Background())
+			defer cancel()
+
+			err := server.Run(ctx, server.Config{
+				Addr: listenAddr,
+			})
+			if err != nil {
+				panic(err)
+			}
 		},
 	}
 )
@@ -36,7 +50,7 @@ func init() {
 	cobra.OnInitialize(initConfig)
 
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.garo.yaml)")
-
+	rootCmd.PersistentFlags().StringVar(&listenAddr, "listenAddr", ":8080", "server listen address")
 	rootCmd.Flags().BoolP("version", "v", false, "shows version information")
 
 	configCommander := &cmd.ConfigCommander{}
