@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package philips.garo.garo;
+option go_package = "garo";
+
+// GetAgentConfigurationRequest request the configuration for a given repository and organization
+message GetAgentConfigurationRequest {
+	string organisation = 1; // required
+	string repository = 2; // required
+}
+
+// AgentConfigurationResponse returns agent configuration options
+message AgentConfigurationResponse {
+	int32 totalAllowedRunners = 1;
+}
+
+// AgentConfigurationService provides agent configurations
+service AgentConfigurationService {
+	rpc GetAgentConfiguration (GetAgentConfigurationRequest) returns (AgentConfigurationResponse);
+}
