@@ -10,7 +10,7 @@ PLANTUML_JAR_URL = https://sourceforge.net/projects/plantuml/files/plantuml.jar/
 DIAGRAMS_SRC := $(wildcard docs/diagrams/*.plantuml)
 DIAGRAMS_PNG := $(addsuffix .png, $(basename $(DIAGRAMS_SRC)))
 DIAGRAMS_SVG := $(addsuffix .svg, $(basename $(DIAGRAMS_SRC)))
-GOPATH := $(word 2, $(subst =, , $(shell go env | grep GOPATH)))
+GOPATH := $(shell go env GOPATH)
 
 .PHONY: help clean clean-diagrams clean-binaries diagrams png-diagrams svg-diagrams compile compile-agent compile-server test test-cover coverage-out coverage-html
 help:
