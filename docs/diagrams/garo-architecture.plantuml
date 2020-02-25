@@ -1,0 +1,71 @@
+@startuml
+
+!$authors = "Marco Franssen"
+
+title Garo System Design
+center header Author: $authors
+center footer Author: $authors
+
+skinparam sequence {
+	ArrowColor black
+	ActorBorderColor DeepSkyBlue
+	LifeLineBorderColor black
+	LifeLineBackgroundColor grey
+}
+
+skinparam component<<garo>> {
+  BackgroundColor lightblue
+  BorderColor blue
+}
+
+skinparam actor {
+  BackgroundColor lightgrey
+  BorderColor black
+}
+
+skinparam queue {
+  BackgroundColor lightgrey
+  BorderColor black
+}
+
+skinparam database {
+  BackgroundColor lightgrey
+  BorderColor black
+}
+
+skinparam component {
+  BackgroundColor lightgrey
+  BorderColor black
+}
+
+actor "Repository admin" as RepoAdmin
+database RepoDatabase [
+	Repository
+	Runner
+	Database
+]
+database AgentDB [
+	<b>Agent storage</b>\n
+	====
+	\nconfig cache
+	---
+	\nactive runner cache
+	---
+	\nworkflow states
+]
+
+queue JobQueue [
+	Pending Workflow Jobs
+]
+
+[Agent] <<garo>>
+[Server] <<garo>>
+
+RepoAdmin .right.> [Open Source Portal] : configures runners\nfor repositories
+[Open Source Portal] .right.> [Server] : configures runners\nfor repositories
+[Agent] .up.> [Server] : fetch config
+[Server] ..> RepoDatabase : store agent\nrunner configurations
+[Agent] ..> AgentDB : state to\nmanage runners
+[Agent] ..> JobQueue : queue jobs\nper runner
+
+@enduml

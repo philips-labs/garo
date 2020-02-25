@@ -1,0 +1,97 @@
+@startuml
+
+!$authors = "Marco Franssen"
+
+title Github at Scale architecture
+center header Author: $authors
+center footer Author: $authors
+
+skinparam handwritten false
+
+skinparam sequence {
+	ArrowColor black
+	ActorBorderColor DeepSkyBlue
+	LifeLineBorderColor black
+	LifeLineBackgroundColor grey
+}
+
+skinparam actor {
+  BackgroundColor lightgrey
+  BorderColor black
+}
+
+skinparam component {
+  BackgroundColor lightgrey
+  BorderColor black
+}
+
+skinparam component<<garo>> {
+  BackgroundColor lightblue
+  BorderColor blue
+}
+
+node "Selfhosted Runner Cluster Project A" as SRCPA {
+    [agent 1] <<garo>>
+    [agent 1] ..> [Runner A] : provisions
+    [agent 1] ..> [Runner B] : provisions
+    [agent 1] ..> [Runner C] : provisions
+}
+
+node "Selfhosted Runner Cluster Project B" as SRCPB {
+    [agent 2] <<garo>>
+    [agent 2] ..> [Runner D] : provisions
+    [agent 2] ..> [Runner E] : provisions
+}
+
+node "Selfhosted Runner Cluster Project C" as SRCPC {
+    [agent 3] <<garo>>
+    [agent 3] ..> [Runner F] : provisions
+}
+
+node "Philips Single Sign On" {
+    [OpenID Connect] as OIDC
+}
+
+node "Philips OSS Platform" as POP {
+    [Open Source Portal] as OSP
+    [OSP] ..> [Repo Analysis] : fetch stats
+    [OSP] ..> [self-service] : repo creation etc
+    [OSP] .left.> OIDC : login via
+    [server] <<garo>>
+    [OSP] ..> [server] : configure runners for repos
+}
+
+node "Github" as GH {
+    [API v3]
+    [API v4]
+    package "philips-labs" as RPL{
+        [garo]
+        [dct-notary-admin]
+        [medical-delivery-drone]
+        [Repo X...]
+    }
+    package "philips-internal" as RPI {
+        [fact-service]
+        [hsdp-console-cli]
+        [hsdp-vpn-agent]
+        [Repo Y...]
+    }
+    package "philips-software" as RPS {
+        [terraform-provider-hsdp]
+        [go-hsdp-api]
+        [docker-openjdk]
+        [Repo Z...]
+    }
+}
+
+[agent 1] .up.> [server] : retrieves config
+[agent 1] ..> [API v3]
+[agent 2] .down.> [server] : retrieves config
+[agent 2] ..> [API v3]
+[agent 3] .up.> [server] : retrieves config
+[agent 3] ..> [API v3]
+[server] ..> [API v3]
+[self-service] ..> [API v3] : manage repos
+[Repo Analysis] ..> [API v4] : various stats
+
+@enduml

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="602px" preserveAspectRatio="none" style="width:915px;height:602px;" version="1.1" viewBox="0 0 915 602" width="915px" zoomAndPan="magnify"><defs><filter height="300%" id="fhnp0nlbz3ere" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><text fill="#888888" font-family="sans-serif" font-size="10" lengthAdjust="spacingAndGlyphs" textLength="115" x="403.5" y="9.668">Author: Marco Franssen</text><text fill="#000000" font-family="sans-serif" font-size="18" lengthAdjust="spacingAndGlyphs" textLength="174" x="374" y="29.1797">Garo System Design</text><!--MD5=[49d591264b2a5b5b8a71384bc7c3f4f1]
+entity RepoAdmin--><ellipse cx="66" cy="50.4766" fill="#D3D3D3" filter="url(#fhnp0nlbz3ere)" rx="8" ry="8" style="stroke: #000000; stroke-width: 1.5;"/><path d="M66,58.4766 L66,85.4766 M53,66.4766 L79,66.4766 M66,85.4766 L53,100.4766 M66,85.4766 L79,100.4766 " fill="none" filter="url(#fhnp0nlbz3ere)" style="stroke: #000000; stroke-width: 1.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="120" x="6" y="119.5117">Repository admin</text><!--MD5=[31273af7160710078b5a192340feab98]
+entity RepoDatabase--><path d="M486.5,223.9766 C486.5,213.9766 533,213.9766 533,213.9766 C533,213.9766 579.5,213.9766 579.5,223.9766 L579.5,282.4414 C579.5,292.4414 533,292.4414 533,292.4414 C533,292.4414 486.5,292.4414 486.5,282.4414 L486.5,223.9766 " fill="#D3D3D3" filter="url(#fhnp0nlbz3ere)" style="stroke: #000000; stroke-width: 1.5;"/><path d="M486.5,223.9766 C486.5,233.9766 533,233.9766 533,233.9766 C533,233.9766 579.5,233.9766 579.5,223.9766 " fill="none" style="stroke: #000000; stroke-width: 1.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="73" x="496.5" y="251.5117">Repository</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="50" x="496.5" y="268">Runner</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="63" x="496.5" y="284.4883">Database</text><!--MD5=[bffd8a4baf6d73d325ace815dd176c1d]
+entity AgentDB--><path d="M526.5,393.9766 C526.5,383.9766 609,383.9766 609,383.9766 C609,383.9766 691.5,383.9766 691.5,393.9766 L691.5,558.8828 C691.5,568.8828 609,568.8828 609,568.8828 C609,568.8828 526.5,568.8828 526.5,558.8828 L526.5,393.9766 " fill="#D3D3D3" filter="url(#fhnp0nlbz3ere)" style="stroke: #000000; stroke-width: 1.5;"/><path d="M526.5,393.9766 C526.5,403.9766 609,403.9766 609,403.9766 C609,403.9766 691.5,403.9766 691.5,393.9766 " fill="none" style="stroke: #000000; stroke-width: 1.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="101" x="536.5" y="421.5117">Agent storage</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="0" x="540.5" y="438"/><path d="M526.5,435.9531 C526.5,445.9531 609,445.9531 609,445.9531 C609,445.9531 691.5,445.9531 691.5,435.9531 " fill="none" style="stroke: #000000; stroke-width: 1.0;"/><path d="M526.5,437.9531 C526.5,447.9531 609,447.9531 609,447.9531 C609,447.9531 691.5,447.9531 691.5,437.9531 " fill="none" style="stroke: #000000; stroke-width: 1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="0" x="546.5" y="458.4883"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="86" x="542.5" y="474.9766">config cache</text><path d="M526.5,476.9297 C526.5,486.9297 609,486.9297 609,486.9297 C609,486.9297 691.5,486.9297 691.5,476.9297 " fill="none" style="stroke: #000000; stroke-width: 1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="0" x="546.5" y="499.4648"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="133" x="542.5" y="515.9531">active runner cache</text><path d="M526.5,517.9063 C526.5,527.9063 609,527.9063 609,527.9063 C609,527.9063 691.5,527.9063 691.5,517.9063 " fill="none" style="stroke: #000000; stroke-width: 1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="0" x="546.5" y="540.4414"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="107" x="542.5" y="556.9297">workflow states</text><!--MD5=[476413a678c1dd4edbedd8e7e1d124dd]
+entity JobQueue--><path d="M731.5,463.4766 L898.5,463.4766 C903.5,463.4766 903.5,476.7207 903.5,476.7207 C903.5,476.7207 903.5,489.9648 898.5,489.9648 L731.5,489.9648 C726.5,489.9648 726.5,476.7207 726.5,476.7207 C726.5,476.7207 726.5,463.4766 731.5,463.4766 " fill="#D3D3D3" filter="url(#fhnp0nlbz3ere)" style="stroke: #000000; stroke-width: 1.5;"/><path d="M898.5,463.4766 C893.5,463.4766 893.5,476.7207 893.5,476.7207 C893.5,489.9648 898.5,489.9648 898.5,489.9648 " fill="none" style="stroke: #000000; stroke-width: 1.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="157" x="731.5" y="482.0117">Pending Workflow Jobs</text><!--MD5=[9cb65aab968679016cabe6121c7526ca]
+entity Agent--><rect fill="#ADD8E6" filter="url(#fhnp0nlbz3ere)" height="52.9766" style="stroke: #0000FF; stroke-width: 1.5;" width="66" x="679" y="226.4766"/><rect fill="#ADD8E6" height="5" style="stroke: #0000FF; stroke-width: 1.5;" width="10" x="674" y="231.4766"/><rect fill="#ADD8E6" height="5" style="stroke: #0000FF; stroke-width: 1.5;" width="10" x="674" y="269.4531"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacingAndGlyphs" textLength="46" x="689" y="250.0117">«garo»</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="41" x="691.5" y="266.5">Agent</text><!--MD5=[b1435b213846e3ddcd1e6c1cd6b83b9a]
+entity Server--><rect fill="#ADD8E6" filter="url(#fhnp0nlbz3ere)" height="52.9766" style="stroke: #0000FF; stroke-width: 1.5;" width="66" x="590" y="54.9766"/><rect fill="#ADD8E6" height="5" style="stroke: #0000FF; stroke-width: 1.5;" width="10" x="585" y="59.9766"/><rect fill="#ADD8E6" height="5" style="stroke: #0000FF; stroke-width: 1.5;" width="10" x="585" y="97.9531"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacingAndGlyphs" textLength="46" x="600" y="78.5117">«garo»</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="43" x="601.5" y="95">Server</text><!--MD5=[28b0bfae5f8cec7568da40e1ab62cbb2]
+entity Open Source Portal--><rect fill="#D3D3D3" filter="url(#fhnp0nlbz3ere)" height="36.4883" style="stroke: #000000; stroke-width: 1.5;" width="152" x="282" y="63.4766"/><rect fill="#D3D3D3" height="5" style="stroke: #000000; stroke-width: 1.5;" width="10" x="277" y="68.4766"/><rect fill="#D3D3D3" height="5" style="stroke: #000000; stroke-width: 1.5;" width="10" x="277" y="89.9648"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="132" x="292" y="87.0117">Open Source Portal</text><!--MD5=[20659a9cec2b8b935af82ca4404d9ec8]
+link RepoAdmin to Open Source Portal--><path d="M126.15,81.4766 C169.64,81.4766 228.9,81.4766 276.62,81.4766 " fill="none" id="RepoAdmin-&gt;Open Source Portal" style="stroke: #000000; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#000000" points="281.79,81.4766,272.79,77.4766,276.79,81.4766,272.79,85.4766,281.79,81.4766" style="stroke: #000000; stroke-width: 1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="119" x="144.5" y="60.0449">configures runners</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="97" x="155.5" y="75.3555">for repositories</text><!--MD5=[7d51ff1cc2aa50c1f0cb3b8b836bffdc]
+link Open Source Portal to Server--><path d="M434.29,81.4766 C483.61,81.4766 545.67,81.4766 584.86,81.4766 " fill="none" id="Open Source Portal-&gt;Server" style="stroke: #000000; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#000000" points="589.99,81.4766,580.99,77.4766,584.99,81.4766,580.99,85.4766,589.99,81.4766" style="stroke: #000000; stroke-width: 1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="119" x="452.5" y="60.0449">configures runners</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="97" x="463.5" y="75.3555">for repositories</text><!--MD5=[ef771290e5e2b3bedcee77ff07213c40]
+reverse link Server to Agent--><path d="M647.09,112.4466 C655.95,124.3266 665.6,138.3666 673,151.9766 C686.08,176.0466 697,205.4466 703.92,226.1166 " fill="none" id="Server&lt;-Agent" style="stroke: #000000; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#000000" points="643.87,108.1766,646.0919,117.7715,646.8791,112.1697,652.4809,112.9569,643.87,108.1766" style="stroke: #000000; stroke-width: 1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="76" x="689" y="173.0449">fetch config</text><!--MD5=[f04b599b13c68262933500c07f16eeae]
+link Server to RepoDatabase--><path d="M589.94,96.2166 C567.42,107.5466 539.35,125.9966 526,151.9766 C517.2,169.0966 517.32,190.0866 520.28,208.4166 " fill="none" id="Server-&gt;RepoDatabase" style="stroke: #000000; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#000000" points="521.19,213.5066,523.5571,203.9464,520.317,208.5834,515.68,205.3432,521.19,213.5066" style="stroke: #000000; stroke-width: 1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="71" x="560" y="165.5449">store agent</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="137" x="527" y="180.8555">runner configurations</text><!--MD5=[98f98831e260b6c956db2aba7d190234]
+link Agent to AgentDB--><path d="M694.05,279.7666 C685.83,292.1966 676.31,307.5166 669,321.9766 C659.89,339.9866 651.25,359.7166 643.51,378.8666 " fill="none" id="Agent-&gt;AgentDB" style="stroke: #000000; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#000000" points="641.56,383.7166,648.6164,376.8458,643.417,379.0742,641.1886,373.8747,641.56,383.7166" style="stroke: #000000; stroke-width: 1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="48" x="696.5" y="335.5449">state to</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="101" x="670" y="350.8555">manage runners</text><!--MD5=[cff06259317ca3d4a990008af17d084a]
+link Agent to JobQueue--><path d="M742,279.5266 C754.16,291.3266 767.34,306.1966 776,321.9766 C800.78,367.1366 810.18,428.4066 813.44,458.0166 " fill="none" id="Agent-&gt;JobQueue" style="stroke: #000000; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#000000" points="813.98,463.1666,817.0327,453.8027,813.4655,458.1931,809.0751,454.6259,813.98,463.1666" style="stroke: #000000; stroke-width: 1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="69" x="791" y="335.5449">queue jobs</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="65" x="793" y="350.8555">per runner</text><text fill="#888888" font-family="sans-serif" font-size="10" lengthAdjust="spacingAndGlyphs" textLength="115" x="403.5" y="588.6445">Author: Marco Franssen</text><!--MD5=[226db087d6f979bd6c90ec4ed07eb1b1]
+@startuml
+
+
+title Garo System Design
+center header Author: Marco Franssen
+center footer Author: Marco Franssen
+
+skinparam sequence {
+	ArrowColor black
+	ActorBorderColor DeepSkyBlue
+	LifeLineBorderColor black
+	LifeLineBackgroundColor grey
+}
+
+skinparam component<<garo>> {
+  BackgroundColor lightblue
+  BorderColor blue
+}
+
+skinparam actor {
+  BackgroundColor lightgrey
+  BorderColor black
+}
+
+skinparam queue {
+  BackgroundColor lightgrey
+  BorderColor black
+}
+
+skinparam database {
+  BackgroundColor lightgrey
+  BorderColor black
+}
+
+skinparam component {
+  BackgroundColor lightgrey
+  BorderColor black
+}
+
+actor "Repository admin" as RepoAdmin
+database RepoDatabase [
+	Repository
+	Runner
+	Database
+]
+database AgentDB [
+	<b>Agent storage</b>\n
+	====
+	\nconfig cache
+	- - -
+	\nactive runner cache
+	- - -
+	\nworkflow states
+]
+
+queue JobQueue [
+	Pending Workflow Jobs
+]
+
+[Agent] <<garo>>
+[Server] <<garo>>
+
+RepoAdmin .right.> [Open Source Portal] : configures runners\nfor repositories
+[Open Source Portal] .right.> [Server] : configures runners\nfor repositories
+[Agent] .up.> [Server] : fetch config
+[Server] ..> RepoDatabase : store agent\nrunner configurations
+[Agent] ..> AgentDB : state to\nmanage runners
+[Agent] ..> JobQueue : queue jobs\nper runner
+
+@enduml
+
+PlantUML version 1.2020.01(Sun Feb 16 18:40:32 CET 2020)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Java Version: 11.0.5+10-LTS
+Operating System: Mac OS X
+Default Encoding: UTF-8
+Language: en
+Country: NL
+--></g></svg>
