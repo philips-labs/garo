@@ -76,3 +76,5 @@ install-tools: download ## Installs tools from tools.go
 
 proto-gen: ## Generate protocol buffer implementations
 	@protoc --proto_path=$(GOPATH)/pkg/mod:. --twirp_out=. --go_out=. ./rpc/garo/*.proto
+	@goimports -e -local github.com/philips-labs -w rpc/garo/service.twirp.go rpc/garo/service.twirp.go
+	@goimports -e -local github.com/philips-labs -w rpc/garo/service.pb.go rpc/garo/service.pb.go
