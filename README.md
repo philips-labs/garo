@@ -21,31 +21,63 @@ This project makes use of CMake to automate a few tasks in development. Therefor
 | MacOSX   | `brew install cmake`        | [cmake-3.16.2-Darwin-x86_64.dmg][] |
 | Windows  | `choco install -y graphviz` | [graphviz-2.38.msi][]              |
 | MacOSX   | `brew install graphviz`     | [graphviz-2.42.2.tar.gz][]         |
+| Windows  | `choco install -y protoc`   |                                    |
+| MacOSX   | `brew install protobuf`     |                                    |
 
 To get an overview of the available make targets simply run the following:
 
 ```bash
 $ make
-clean                Cleans plantuml.jar and generated diagrams
+clean-binaries       Cleans binaries
+clean-diagrams       Cleans plantuml.jar and generated diagrams
+clean                Clean binaries and diagrams
+compile-agent        Compile garo-agent
+compile-server       Compile garo-server
+compile              Compile garo-agent and garo-server
+coverage-html        Show coverage in browser
+coverage-out         Show coverage in cli
 diagrams             Generate diagrams in SVG and PNG format
+download             Fetches go.mod dependencies via go mod download
+install-protoc       Installs protoc
+install-tools        Installs tools from tools.go
 png-diagrams         Generate diagrams in PNG format
+proto-gen            Generate protocol buffer implementations
 svg-diagrams         Generate diagrams in SVG format
+test-cover           Run tests and coverage
+test                 Run tests
 ```
 
 ## Run
 
-GARO currently supports listing a page of organization repositories.
+Github Testing implementation _(To Be Removed)_ can be run as following.
 
 ```bash
-export GH_TOKEN=MYDUMMYPERSONALGHTOKEN
-./garo my-gh-organization
+export GARO_GH_TOKEN=MYDUMMYPERSONALGHTOKEN
+go build .
+./garo my-gh-organization my-repository
+```
+
+### Server
+
+The Server currently exposes a http server where agents can fetch a configuration. _The configuration specifics and remainder of features still has to be implemented._
+
+```bash
+bin/garo-server
+```
+
+### Agent
+
+The Agent currently connects to the server to fetch a configuration. _The configuration specifics and the remainder of features still has to be implemented._
+
+```bash
+bin/garo-agent
 ```
 
 ## Test
 
 ```bash
-export GH_TOKEN=MYDUMMYPERSONALGHTOKEN
-go test -v ./...
+export GARO_GH_TOKEN=MYDUMMYPERSONALGHTOKEN
+make test
 ```
 
 To run the tests from _VSCode_ you will have to copy the `.env.example` and fill out your personal Github Token.
@@ -54,15 +86,17 @@ To run the tests from _VSCode_ you will have to copy the `.env.example` and fill
 cp .env.example .env
 ```
 
+To view the code coverage you can make use of `make coverage-out` or `make coverage-html`.
+
 ## Update diagrams
 
 To update the diagrams you simply edit the plantuml files followed by running the according `make` target.
 
 ```bash
-make clean diagrams
+make clean-diagrams diagrams
 ```
 
-> **NOTE:** due to `make` caching ensure to run the `clean` target to regenerate existing `png` and `svg` files.
+> **NOTE:** due to `make` caching ensure to run the `clean-diagrams` target to regenerate existing `png` and `svg` files.
 
 [cmake-3.16.2-win64-x64.msi]: https://github.com/Kitware/CMake/releases/download/v3.16.2/cmake-3.16.2-win64-x64.msi "Download cmake-3.16.2-win64-x64.msi"
 [cmake-3.16.2-darwin-x86_64.dmg]: https://github.com/Kitware/CMake/releases/download/v3.16.2/cmake-3.16.2-Darwin-x86_64.dmg "Download cmake-3.16.2-Darwin-x86_64.dmg"
