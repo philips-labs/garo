@@ -10,9 +10,9 @@ import (
 )
 
 func main() {
-	token := os.Getenv("GH_TOKEN")
+	token := os.Getenv("GARO_GH_TOKEN")
 	if token == "" {
-		log.Fatal("You need to export the environment variable GH_TOKEN")
+		log.Fatal("You need to export the environment variable GARO_GH_TOKEN")
 	}
 	args := os.Args[1:]
 	if len(args) != 2 {
