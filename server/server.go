@@ -31,11 +31,13 @@ type Server struct {
 // New creates a new instance of Server
 func New(conf Config) *Server {
 	svc := &rpc.Service{}
-	twirpHandler := garo.NewAgentConfigurationServiceServer(svc, nil)
+
+	twirpServer := garo.NewAgentConfigurationServiceServer(svc, nil)
+	api := configureAPI(twirpServer, conf.Logger)
 
 	srv := http.Server{
 		Addr:    conf.Addr,
-		Handler: twirpHandler,
+		Handler: api,
 	}
 
 	return &Server{&srv, conf}

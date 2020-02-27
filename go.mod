@@ -3,6 +3,7 @@ module github.com/philips-labs/garo
 go 1.13
 
 require (
+	github.com/go-chi/chi v4.0.3+incompatible
 	github.com/golang/protobuf v1.3.2
 	github.com/google/go-github/v29 v29.0.3
 	github.com/mitchellh/go-homedir v1.1.0

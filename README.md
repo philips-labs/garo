@@ -62,7 +62,22 @@ go build .
 The Server currently exposes a http server where agents can fetch a configuration. _The configuration specifics and remainder of features still has to be implemented._
 
 ```bash
-bin/garo-server
+$ bin/garo-server
+2020-02-27T14:45:03.921+0100    DEBUG    server/api.go:75       Registering route  {"method": "GET", "route": "/"}
+2020-02-27T14:45:03.921+0100    DEBUG    server/api.go:75       Registering route  {"method": "GET", "route": "/ping"}
+2020-02-27T14:45:03.921+0100    DEBUG    server/api.go:75       Registering route  {"method": "OPTIONS", "route": "/twirp/philips.garo.garo.AgentConfigurationService/*"}
+2020-02-27T14:45:03.921+0100    DEBUG    server/api.go:75       Registering route  {"method": "TRACE", "route": "/twirp/philips.garo.garo.AgentConfigurationService/*"}
+2020-02-27T14:45:03.921+0100    DEBUG    server/api.go:75       Registering route  {"method": "POST", "route": "/twirp/philips.garo.garo.AgentConfigurationService/*"}
+2020-02-27T14:45:03.921+0100    DEBUG    server/api.go:75       Registering route  {"method": "PUT", "route": "/twirp/philips.garo.garo.AgentConfigurationService/*"}
+2020-02-27T14:45:03.921+0100    DEBUG    server/api.go:75       Registering route  {"method": "GET", "route": "/twirp/philips.garo.garo.AgentConfigurationService/*"}
+2020-02-27T14:45:03.921+0100    DEBUG    server/api.go:75       Registering route  {"method": "CONNECT", "route": "/twirp/philips.garo.garo.AgentConfigurationService/*"}
+2020-02-27T14:45:03.921+0100    DEBUG    server/api.go:75       Registering route  {"method": "HEAD", "route": "/twirp/philips.garo.garo.AgentConfigurationService/*"}
+2020-02-27T14:45:03.921+0100    DEBUG    server/api.go:75       Registering route  {"method": "DELETE", "route": "/twirp/philips.garo.garo.AgentConfigurationService/*"}
+2020-02-27T14:45:03.921+0100    DEBUG    server/api.go:75       Registering route  {"method": "PATCH", "route": "/twirp/philips.garo.garo.AgentConfigurationService/*"}
+2020-02-27T14:45:03.921+0100    INFO     garo-server/root.go:63 Server is ready to handle requests  {"addr": ":8080"}
+^C
+2020-02-27T14:45:15.097+0100    INFO     server/server.go:81    Server is shutting down  {"reason": "interrupt"}
+2020-02-27T14:45:15.097+0100    INFO     server/server.go:90    Server stopped
 ```
 
 ### Agent

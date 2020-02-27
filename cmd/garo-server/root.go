@@ -2,8 +2,10 @@ package main
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"log"
+	"net/http"
 	"os"
 
 	"go.uber.org/zap"
@@ -52,7 +54,7 @@ var (
 			})
 			go func() {
 				err := srv.Run(ctx)
-				if err != nil {
+				if err != nil && !errors.Is(err, http.ErrServerClosed) {
 					logger.Error("Failed to run the server", zap.Error(err))
 				}
 			}()
