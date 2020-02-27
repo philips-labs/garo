@@ -3,7 +3,11 @@ package main
 import (
 	"context"
 	"fmt"
+	"log"
 	"os"
+
+	"go.uber.org/zap"
+	"go.uber.org/zap/zapcore"
 
 	"github.com/spf13/cobra"
 
@@ -36,12 +40,26 @@ var (
 			ctx, cancel := context.WithCancel(context.Background())
 			defer cancel()
 
-			err := server.Run(ctx, server.Config{
-				Addr: listenAddr,
-			})
+			logger, err := zap.NewDevelopment(zap.AddStacktrace(zapcore.FatalLevel))
 			if err != nil {
-				panic(err)
+				log.Fatalf("Can't initialize zap logger: %v", err)
 			}
+			defer logger.Sync()
+
+			srv := server.New(server.Config{
+				Addr:   listenAddr,
+				Logger: logger,
+			})
+			go func() {
+				err := srv.Run(ctx)
+				if err != nil {
+					logger.Error("Failed to run the server", zap.Error(err))
+				}
+			}()
+
+			logger.Info("Server is ready to handle requests", zap.String("addr", srv.Addr))
+
+			srv.GracefulShutdown()
 		},
 	}
 )

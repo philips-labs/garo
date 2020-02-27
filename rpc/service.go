@@ -8,11 +8,11 @@ import (
 	"github.com/philips-labs/garo/rpc/garo"
 )
 
-// Server implements the Garo service
-type Server struct{}
+// Service implements the Garo service
+type Service struct{}
 
 // GetAgentConfiguration returns the action runner configuration for a given repository
-func (s *Server) GetAgentConfiguration(ctx context.Context, r *garo.GetAgentConfigurationRequest) (*garo.AgentConfigurationResponse, error) {
+func (s *Service) GetAgentConfiguration(ctx context.Context, r *garo.GetAgentConfigurationRequest) (*garo.AgentConfigurationResponse, error) {
 	if r.Organisation == "" {
 		return nil, twirp.InvalidArgumentError("organisation", "You need to mandatory provide a organization")
 	}

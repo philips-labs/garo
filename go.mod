@@ -10,5 +10,6 @@ require (
 	github.com/spf13/viper v1.6.2
 	github.com/stretchr/testify v1.4.0
 	github.com/twitchtv/twirp v5.10.1+incompatible
+	go.uber.org/zap v1.14.0
 	golang.org/x/oauth2 v0.0.0-20200107190931-bf48bf16ab8d
 )
