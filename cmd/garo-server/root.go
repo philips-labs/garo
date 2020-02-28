@@ -46,7 +46,7 @@ var (
 			defer logger.Sync()
 
 			srv := server.New(ctx, server.Config{
-				Addr:   viper.GetString("server.listen_address"),
+				Addr:   viper.GetString("server.listenAddress"),
 				Logger: logger,
 			})
 			go func() {
@@ -79,7 +79,7 @@ func init() {
 
 func initConfig() {
 	err := cmd.InitConfig(cfgFile, func() {
-		cmd.SetDefaultAndFlagBinding(rootCmd, "server.listen_address", "listen-addr", ":8080")
+		cmd.SetDefaultAndFlagBinding(rootCmd, "server.listenAddress", "listen-addr", ":8080")
 	})
 	if err != nil && !cmd.IsConfigError(err) {
 		fmt.Println(err)

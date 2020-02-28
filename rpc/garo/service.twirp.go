@@ -47,7 +47,7 @@ import (
 
 // AgentConfigurationService provides agent configurations
 type AgentConfigurationService interface {
-	GetAgentConfiguration(context.Context, *GetAgentConfigurationRequest) (*AgentConfigurationResponse, error)
+	GetRepositoryConfiguration(context.Context, *GetRepoConfigurationRequest) (*RepoConfigurationResponse, error)
 }
 
 // =========================================
@@ -74,7 +74,7 @@ func NewAgentConfigurationServiceProtobufClient(addr string, client HTTPClient, 
 
 	prefix := urlBase(addr) + AgentConfigurationServicePathPrefix
 	urls := [1]string{
-		prefix + "GetAgentConfiguration",
+		prefix + "GetRepositoryConfiguration",
 	}
 
 	return &agentConfigurationServiceProtobufClient{
@@ -84,11 +84,11 @@ func NewAgentConfigurationServiceProtobufClient(addr string, client HTTPClient, 
 	}
 }
 
-func (c *agentConfigurationServiceProtobufClient) GetAgentConfiguration(ctx context.Context, in *GetAgentConfigurationRequest) (*AgentConfigurationResponse, error) {
+func (c *agentConfigurationServiceProtobufClient) GetRepositoryConfiguration(ctx context.Context, in *GetRepoConfigurationRequest) (*RepoConfigurationResponse, error) {
 	ctx = ctxsetters.WithPackageName(ctx, "philips.garo.garo")
 	ctx = ctxsetters.WithServiceName(ctx, "AgentConfigurationService")
-	ctx = ctxsetters.WithMethodName(ctx, "GetAgentConfiguration")
-	out := new(AgentConfigurationResponse)
+	ctx = ctxsetters.WithMethodName(ctx, "GetRepositoryConfiguration")
+	out := new(RepoConfigurationResponse)
 	err := doProtobufRequest(ctx, c.client, c.opts.Hooks, c.urls[0], in, out)
 	if err != nil {
 		twerr, ok := err.(twirp.Error)
@@ -128,7 +128,7 @@ func NewAgentConfigurationServiceJSONClient(addr string, client HTTPClient, opts
 
 	prefix := urlBase(addr) + AgentConfigurationServicePathPrefix
 	urls := [1]string{
-		prefix + "GetAgentConfiguration",
+		prefix + "GetRepositoryConfiguration",
 	}
 
 	return &agentConfigurationServiceJSONClient{
@@ -138,11 +138,11 @@ func NewAgentConfigurationServiceJSONClient(addr string, client HTTPClient, opts
 	}
 }
 
-func (c *agentConfigurationServiceJSONClient) GetAgentConfiguration(ctx context.Context, in *GetAgentConfigurationRequest) (*AgentConfigurationResponse, error) {
+func (c *agentConfigurationServiceJSONClient) GetRepositoryConfiguration(ctx context.Context, in *GetRepoConfigurationRequest) (*RepoConfigurationResponse, error) {
 	ctx = ctxsetters.WithPackageName(ctx, "philips.garo.garo")
 	ctx = ctxsetters.WithServiceName(ctx, "AgentConfigurationService")
-	ctx = ctxsetters.WithMethodName(ctx, "GetAgentConfiguration")
-	out := new(AgentConfigurationResponse)
+	ctx = ctxsetters.WithMethodName(ctx, "GetRepositoryConfiguration")
+	out := new(RepoConfigurationResponse)
 	err := doJSONRequest(ctx, c.client, c.opts.Hooks, c.urls[0], in, out)
 	if err != nil {
 		twerr, ok := err.(twirp.Error)
@@ -206,8 +206,8 @@ func (s *agentConfigurationServiceServer) ServeHTTP(resp http.ResponseWriter, re
 	}
 
 	switch req.URL.Path {
-	case "/twirp/philips.garo.garo.AgentConfigurationService/GetAgentConfiguration":
-		s.serveGetAgentConfiguration(ctx, resp, req)
+	case "/twirp/philips.garo.garo.AgentConfigurationService/GetRepositoryConfiguration":
+		s.serveGetRepositoryConfiguration(ctx, resp, req)
 		return
 	default:
 		msg := fmt.Sprintf("no handler for path %q", req.URL.Path)
@@ -217,7 +217,7 @@ func (s *agentConfigurationServiceServer) ServeHTTP(resp http.ResponseWriter, re
 	}
 }
 
-func (s *agentConfigurationServiceServer) serveGetAgentConfiguration(ctx context.Context, resp http.ResponseWriter, req *http.Request) {
+func (s *agentConfigurationServiceServer) serveGetRepositoryConfiguration(ctx context.Context, resp http.ResponseWriter, req *http.Request) {
 	header := req.Header.Get("Content-Type")
 	i := strings.Index(header, ";")
 	if i == -1 {
@@ -225,9 +225,9 @@ func (s *agentConfigurationServiceServer) serveGetAgentConfiguration(ctx context
 	}
 	switch strings.TrimSpace(strings.ToLower(header[:i])) {
 	case "application/json":
-		s.serveGetAgentConfigurationJSON(ctx, resp, req)
+		s.serveGetRepositoryConfigurationJSON(ctx, resp, req)
 	case "application/protobuf":
-		s.serveGetAgentConfigurationProtobuf(ctx, resp, req)
+		s.serveGetRepositoryConfigurationProtobuf(ctx, resp, req)
 	default:
 		msg := fmt.Sprintf("unexpected Content-Type: %q", req.Header.Get("Content-Type"))
 		twerr := badRouteError(msg, req.Method, req.URL.Path)
@@ -235,16 +235,16 @@ func (s *agentConfigurationServiceServer) serveGetAgentConfiguration(ctx context
 	}
 }
 
-func (s *agentConfigurationServiceServer) serveGetAgentConfigurationJSON(ctx context.Context, resp http.ResponseWriter, req *http.Request) {
+func (s *agentConfigurationServiceServer) serveGetRepositoryConfigurationJSON(ctx context.Context, resp http.ResponseWriter, req *http.Request) {
 	var err error
-	ctx = ctxsetters.WithMethodName(ctx, "GetAgentConfiguration")
+	ctx = ctxsetters.WithMethodName(ctx, "GetRepositoryConfiguration")
 	ctx, err = callRequestRouted(ctx, s.hooks)
 	if err != nil {
 		s.writeError(ctx, resp, err)
 		return
 	}
 
-	reqContent := new(GetAgentConfigurationRequest)
+	reqContent := new(GetRepoConfigurationRequest)
 	unmarshaler := jsonpb.Unmarshaler{AllowUnknownFields: true}
 	if err = unmarshaler.Unmarshal(req.Body, reqContent); err != nil {
 		s.writeError(ctx, resp, malformedRequestError("the json request could not be decoded"))
@@ -252,10 +252,10 @@ func (s *agentConfigurationServiceServer) serveGetAgentConfigurationJSON(ctx con
 	}
 
 	// Call service method
-	var respContent *AgentConfigurationResponse
+	var respContent *RepoConfigurationResponse
 	func() {
 		defer ensurePanicResponses(ctx, resp, s.hooks)
-		respContent, err = s.AgentConfigurationService.GetAgentConfiguration(ctx, reqContent)
+		respContent, err = s.AgentConfigurationService.GetRepositoryConfiguration(ctx, reqContent)
 	}()
 
 	if err != nil {
@@ -263,7 +263,7 @@ func (s *agentConfigurationServiceServer) serveGetAgentConfigurationJSON(ctx con
 		return
 	}
 	if respContent == nil {
-		s.writeError(ctx, resp, twirp.InternalError("received a nil *AgentConfigurationResponse and nil error while calling GetAgentConfiguration. nil responses are not supported"))
+		s.writeError(ctx, resp, twirp.InternalError("received a nil *RepoConfigurationResponse and nil error while calling GetRepositoryConfiguration. nil responses are not supported"))
 		return
 	}
 
@@ -290,9 +290,9 @@ func (s *agentConfigurationServiceServer) serveGetAgentConfigurationJSON(ctx con
 	callResponseSent(ctx, s.hooks)
 }
 
-func (s *agentConfigurationServiceServer) serveGetAgentConfigurationProtobuf(ctx context.Context, resp http.ResponseWriter, req *http.Request) {
+func (s *agentConfigurationServiceServer) serveGetRepositoryConfigurationProtobuf(ctx context.Context, resp http.ResponseWriter, req *http.Request) {
 	var err error
-	ctx = ctxsetters.WithMethodName(ctx, "GetAgentConfiguration")
+	ctx = ctxsetters.WithMethodName(ctx, "GetRepositoryConfiguration")
 	ctx, err = callRequestRouted(ctx, s.hooks)
 	if err != nil {
 		s.writeError(ctx, resp, err)
@@ -304,17 +304,17 @@ func (s *agentConfigurationServiceServer) serveGetAgentConfigurationProtobuf(ctx
 		s.writeError(ctx, resp, wrapInternal(err, "failed to read request body"))
 		return
 	}
-	reqContent := new(GetAgentConfigurationRequest)
+	reqContent := new(GetRepoConfigurationRequest)
 	if err = proto.Unmarshal(buf, reqContent); err != nil {
 		s.writeError(ctx, resp, malformedRequestError("the protobuf request could not be decoded"))
 		return
 	}
 
 	// Call service method
-	var respContent *AgentConfigurationResponse
+	var respContent *RepoConfigurationResponse
 	func() {
 		defer ensurePanicResponses(ctx, resp, s.hooks)
-		respContent, err = s.AgentConfigurationService.GetAgentConfiguration(ctx, reqContent)
+		respContent, err = s.AgentConfigurationService.GetRepositoryConfiguration(ctx, reqContent)
 	}()
 
 	if err != nil {
@@ -322,7 +322,7 @@ func (s *agentConfigurationServiceServer) serveGetAgentConfigurationProtobuf(ctx
 		return
 	}
 	if respContent == nil {
-		s.writeError(ctx, resp, twirp.InternalError("received a nil *AgentConfigurationResponse and nil error while calling GetAgentConfiguration. nil responses are not supported"))
+		s.writeError(ctx, resp, twirp.InternalError("received a nil *RepoConfigurationResponse and nil error while calling GetRepositoryConfiguration. nil responses are not supported"))
 		return
 	}
 
@@ -871,19 +871,20 @@ func callClientError(ctx context.Context, h *twirp.ClientHooks, err twirp.Error)
 }
 
 var twirpFileDescriptor0 = []byte{
-	// 219 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x7c, 0x90, 0x31, 0x4f, 0x03, 0x31,
-	0x0c, 0x85, 0x75, 0x08, 0x2a, 0x61, 0xb1, 0x10, 0x04, 0x2a, 0x15, 0x42, 0xe8, 0x26, 0x16, 0x72,
-	0x08, 0x7e, 0x41, 0x61, 0x60, 0x63, 0x08, 0x1b, 0x5b, 0x5a, 0x4c, 0x88, 0x14, 0xc5, 0xc1, 0xf6,
-	0x51, 0xf1, 0x3f, 0xf8, 0xc1, 0xa8, 0x61, 0x01, 0x35, 0x74, 0xf1, 0xf0, 0xde, 0xb3, 0x9f, 0x3e,
-	0xc3, 0x09, 0x97, 0xe5, 0x10, 0x3c, 0xd3, 0x20, 0xc8, 0x1f, 0x71, 0x89, 0xb6, 0x30, 0x29, 0x99,
-	0xc3, 0xf2, 0x16, 0x53, 0x2c, 0x62, 0xd7, 0x5e, 0x1d, 0xfd, 0x02, 0xce, 0x1e, 0x50, 0xe7, 0x01,
-	0xb3, 0xde, 0x53, 0x7e, 0x8d, 0x61, 0x64, 0xaf, 0x91, 0xb2, 0xc3, 0xf7, 0x11, 0x45, 0x4d, 0x0f,
-	0x07, 0xc4, 0xc1, 0xe7, 0x28, 0x55, 0x9e, 0x76, 0x17, 0xdd, 0xe5, 0xbe, 0xfb, 0xa3, 0x99, 0x73,
-	0x00, 0xc6, 0x42, 0x12, 0x95, 0xf8, 0x73, 0xba, 0x53, 0x13, 0xbf, 0x94, 0xfe, 0x11, 0x66, 0xad,
-	0x02, 0x29, 0x94, 0x05, 0xcd, 0x35, 0x1c, 0x29, 0xa9, 0x4f, 0xf3, 0x94, 0x68, 0x85, 0x2f, 0x6e,
-	0xcc, 0x19, 0x59, 0x6a, 0xd1, 0x9e, 0x6b, 0x59, 0x37, 0x5f, 0x1d, 0x9c, 0x6e, 0x1e, 0x7c, 0xfa,
-	0x41, 0x35, 0x2b, 0x38, 0x6e, 0x12, 0x99, 0xc1, 0x6e, 0xe0, 0xdb, 0x6d, 0xec, 0xb3, 0xab, 0xc6,
-	0xc2, 0xff, 0x20, 0x77, 0x93, 0xe7, 0xdd, 0x75, 0x64, 0x31, 0xa9, 0xcf, 0xbe, 0xfd, 0x0e, 0x00,
-	0x00, 0xff, 0xff, 0x2b, 0x1b, 0xe2, 0x69, 0x86, 0x01, 0x00, 0x00,
+	// 230 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x7c, 0x91, 0x31, 0x4b, 0x04, 0x31,
+	0x10, 0x85, 0x89, 0xc8, 0x81, 0x83, 0x16, 0x06, 0x91, 0xbb, 0x13, 0x44, 0xb6, 0xb2, 0x90, 0x1c,
+	0x9c, 0xbf, 0x40, 0xaf, 0xb0, 0x8f, 0x9d, 0x5d, 0x5c, 0xc6, 0x18, 0xd0, 0x99, 0x38, 0x93, 0x88,
+	0xfa, 0x47, 0xfc, 0xbb, 0x72, 0x39, 0x0b, 0xf7, 0x5c, 0x6d, 0x52, 0xbc, 0xf9, 0x26, 0x8f, 0xf7,
+	0x06, 0x8e, 0x25, 0xf7, 0x8b, 0x18, 0x84, 0x17, 0x8a, 0xf2, 0x9a, 0x7a, 0x74, 0x59, 0xb8, 0xb0,
+	0x3d, 0xcc, 0x8f, 0xe9, 0x29, 0x65, 0x75, 0xeb, 0x59, 0x7b, 0xba, 0x00, 0x27, 0x37, 0x58, 0x3c,
+	0x66, 0x5e, 0x31, 0x3d, 0xa4, 0x58, 0x25, 0x94, 0xc4, 0xe4, 0xf1, 0xa5, 0xa2, 0x16, 0xdb, 0xc1,
+	0x3e, 0x4b, 0x0c, 0x94, 0xb4, 0xc9, 0x53, 0x73, 0x66, 0xce, 0xf7, 0xfc, 0x40, 0xb3, 0xa7, 0x00,
+	0x82, 0x99, 0x35, 0x15, 0x96, 0xf7, 0xe9, 0x4e, 0x23, 0x7e, 0x28, 0x1d, 0xc3, 0x6c, 0xe4, 0x7f,
+	0xcd, 0x4c, 0x8a, 0x5b, 0xcb, 0x66, 0x7b, 0xd9, 0x2e, 0xe1, 0xe8, 0x39, 0xbc, 0xad, 0x98, 0xfa,
+	0x2a, 0x82, 0x54, 0x7c, 0x25, 0x42, 0xd1, 0x66, 0x73, 0xe0, 0x47, 0x67, 0xcb, 0x4f, 0x03, 0xb3,
+	0xab, 0x88, 0x54, 0x06, 0x96, 0xb7, 0x9b, 0x2a, 0xec, 0x07, 0xcc, 0xbf, 0x13, 0x6f, 0x2c, 0x06,
+	0x90, 0x75, 0xee, 0x57, 0x47, 0xee, 0x9f, 0x82, 0xe6, 0x17, 0x23, 0xfc, 0x9f, 0x69, 0xaf, 0x27,
+	0x77, 0xbb, 0x6b, 0xe2, 0x7e, 0xd2, 0xee, 0x71, 0xf9, 0x15, 0x00, 0x00, 0xff, 0xff, 0xd1, 0x52,
+	0x9f, 0xc3, 0xa9, 0x01, 0x00, 0x00,
 }
