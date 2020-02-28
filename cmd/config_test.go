@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"strings"
 	"testing"
 
 	homedir "github.com/mitchellh/go-homedir"
@@ -20,7 +19,14 @@ import (
 
 var (
 	token  string
-	expCfg = func(token string) string { return "\nconfig:\n  gh_token:  " + token + "\n" }
+	expCfg = func(token string) string {
+		return fmt.Sprintf(`
+config:
+  agent.server_address:   http://localhost:8080
+  gh_token:               %s
+  server.listen_address:  :8080
+`, token)
+	}
 )
 
 func getRootCmdWithConfig() (*cobra.Command, *cmd.ConfigCommander) {
@@ -34,14 +40,9 @@ func getRootCmdWithConfig() (*cobra.Command, *cmd.ConfigCommander) {
 }
 
 func initConfig(configPath string) error {
-	viper.SetConfigName(".garo")
-	viper.AddConfigPath(configPath)
-	viper.SetEnvPrefix("garo")
-	viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_", "-", "_"))
-	viper.AutomaticEnv()
-	viper.BindEnv("gh_token")
-
-	return viper.ReadInConfig()
+	return cmd.InitConfig("", func() {
+		viper.AddConfigPath(configPath)
+	})
 }
 
 func init() {

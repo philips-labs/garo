@@ -1,0 +1,7 @@
+# The server section is only required for garo-server
+server:
+  listen_address: :8080
+
+# The agent section is only required for garo-agent
+agent:
+  server_address: http://localhost:8080

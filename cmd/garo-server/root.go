@@ -12,8 +12,6 @@ import (
 	"go.uber.org/zap/zapcore"
 
 	"github.com/spf13/cobra"
-
-	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/viper"
 
 	"github.com/philips-labs/garo/cmd"
@@ -21,8 +19,7 @@ import (
 )
 
 var (
-	listenAddr string
-	cfgFile    string
+	cfgFile string
 )
 
 var (
@@ -49,7 +46,7 @@ var (
 			defer logger.Sync()
 
 			srv := server.New(ctx, server.Config{
-				Addr:   listenAddr,
+				Addr:   viper.GetString("server.listen_address"),
 				Logger: logger,
 			})
 			go func() {
@@ -70,7 +67,7 @@ func init() {
 	cobra.OnInitialize(initConfig)
 
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.garo.yaml)")
-	rootCmd.PersistentFlags().StringVar(&listenAddr, "listenAddr", ":8080", "server listen address")
+	rootCmd.PersistentFlags().String("listen-addr", "", "server listen address")
 	rootCmd.Flags().BoolP("version", "v", false, "shows version information")
 
 	configCommander := &cmd.ConfigCommander{}
@@ -81,24 +78,12 @@ func init() {
 }
 
 func initConfig() {
-	if cfgFile != "" {
-		viper.SetConfigFile(cfgFile)
-	} else {
-		home, err := homedir.Dir()
-		if err != nil {
-			fmt.Println(err)
-			os.Exit(1)
-		}
-
-		viper.AddConfigPath(home)
-		viper.SetEnvPrefix("garo")
-		viper.BindEnv("gh_token")
-		viper.SetConfigName(".garo")
+	err := cmd.InitConfig(cfgFile, func() {
+		cmd.SetDefaultAndFlagBinding(rootCmd, "server.listen_address", "listen-addr", ":8080")
+	})
+	if err != nil && !cmd.IsConfigError(err) {
+		fmt.Println(err)
+		os.Exit(1)
 	}
-
-	viper.AutomaticEnv()
-
-	if err := viper.ReadInConfig(); err == nil {
-		fmt.Println("Using config file:", viper.ConfigFileUsed())
-	}
+	fmt.Println("Using config file: ", viper.ConfigFileUsed())
 }
