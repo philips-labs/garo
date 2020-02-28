@@ -2,8 +2,9 @@ package agent
 
 import (
 	"context"
-	"fmt"
 	"net/http"
+
+	"go.uber.org/zap"
 
 	"github.com/philips-labs/garo/rpc/garo"
 )
@@ -11,6 +12,7 @@ import (
 // Config configures the agent
 type Config struct {
 	ServerAddr string
+	Logger     *zap.Logger
 }
 
 // Run runs the agent to manage your github action workers
@@ -25,7 +27,7 @@ func Run(ctx context.Context, conf Config) error {
 		return err
 	}
 
-	fmt.Printf("Agent configuration: %+v\n", cfg)
+	conf.Logger.Info("Agent configuration", zap.Any("cfg", cfg))
 
 	return nil
 }

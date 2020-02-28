@@ -3,10 +3,14 @@ package main
 import (
 	"context"
 	"fmt"
+	"log"
 	"os"
+	"os/signal"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+	"go.uber.org/zap"
+	"go.uber.org/zap/zapcore"
 
 	"github.com/philips-labs/garo/agent"
 	"github.com/philips-labs/garo/cmd"
@@ -33,12 +37,28 @@ var (
 			ctx, cancel := context.WithCancel(context.Background())
 			defer cancel()
 
-			err := agent.Run(ctx, agent.Config{
+			logger, err := zap.NewDevelopment(zap.AddStacktrace(zapcore.FatalLevel))
+			if err != nil {
+				log.Fatalf("Can't initialize zap logger: %v", err)
+			}
+			defer logger.Sync()
+
+			err = agent.Run(ctx, agent.Config{
 				ServerAddr: serverAddr,
+				Logger:     logger,
 			})
 			if err != nil {
-				panic(err)
+				logger.Error("Failed to run Agent", zap.Error(err))
+				return
 			}
+
+			logger.Info("Agent is running")
+
+			quit := make(chan os.Signal, 1)
+			signal.Notify(quit, os.Interrupt)
+			sig := <-quit
+
+			logger.Info("Agent is shutting down", zap.String("reason", sig.String()))
 		},
 	}
 )
