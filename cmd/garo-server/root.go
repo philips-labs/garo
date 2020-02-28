@@ -48,12 +48,12 @@ var (
 			}
 			defer logger.Sync()
 
-			srv := server.New(server.Config{
+			srv := server.New(ctx, server.Config{
 				Addr:   listenAddr,
 				Logger: logger,
 			})
 			go func() {
-				err := srv.Run(ctx)
+				err := srv.Run()
 				if err != nil && !errors.Is(err, http.ErrServerClosed) {
 					logger.Error("Failed to run the server", zap.Error(err))
 				}

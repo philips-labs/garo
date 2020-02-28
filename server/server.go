@@ -25,11 +25,12 @@ type Config struct {
 // Server holds the http.Server instance
 type Server struct {
 	*http.Server
+	ctx  context.Context
 	conf Config
 }
 
 // New creates a new instance of Server
-func New(conf Config) *Server {
+func New(ctx context.Context, conf Config) *Server {
 	svc := &rpc.Service{}
 
 	twirpServer := garo.NewAgentConfigurationServiceServer(svc, nil)
@@ -40,19 +41,19 @@ func New(conf Config) *Server {
 		Handler: api,
 	}
 
-	return &Server{&srv, conf}
+	return &Server{&srv, ctx, conf}
 }
 
 // Run sets up and starts a TLS server that can be cancelled usting the
 // given configuration.
 func Run(ctx context.Context, conf Config) error {
-	srv := New(conf)
-	return srv.Run(ctx)
+	srv := New(ctx, conf)
+	return srv.Run()
 }
 
 // Run sets up and starts a TLS server that can be cancelled usting the
 // given configuration.
-func (s *Server) Run(ctx context.Context) error {
+func (s *Server) Run() error {
 	tcpAddr, err := net.ResolveTCPAddr("tcp", s.conf.Addr)
 	if err != nil {
 		return err
@@ -80,7 +81,7 @@ func (s *Server) GracefulShutdown() {
 
 	s.conf.Logger.Info("Server is shutting down", zap.String("reason", sig.String()))
 
-	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	ctx, cancel := context.WithTimeout(s.ctx, 30*time.Second)
 	defer cancel()
 
 	s.SetKeepAlivesEnabled(false)
