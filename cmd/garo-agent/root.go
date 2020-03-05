@@ -6,6 +6,7 @@ import (
 	"log"
 	"os"
 	"os/signal"
+	"time"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -17,8 +18,7 @@ import (
 )
 
 var (
-	cfgFile    string
-	serverAddr string
+	cfgFile string
 )
 
 var (
@@ -43,16 +43,19 @@ var (
 			}
 			defer logger.Sync()
 
-			err = agent.Run(ctx, agent.Config{
-				ServerAddr: serverAddr,
-				Logger:     logger,
-			})
+			cfg := agent.Config{
+				ServerAddr:      viper.GetString("agent.serverAddress"),
+				Logger:          logger,
+				RefreshInterval: viper.GetDuration("agent.refreshInterval"),
+				Repositories:    viper.GetStringSlice("agent.repositories"),
+			}
+			err = agent.Run(ctx, cfg)
 			if err != nil {
 				logger.Error("Failed to run Agent", zap.Error(err))
 				return
 			}
 
-			logger.Info("Agent is running")
+			logger.Info("Agent is running for", zap.Strings("repos", cfg.Repositories))
 
 			quit := make(chan os.Signal, 1)
 			signal.Notify(quit, os.Interrupt)
@@ -65,7 +68,8 @@ var (
 
 func initConfig() {
 	err := cmd.InitConfig(cfgFile, func() {
-		cmd.SetDefaultAndFlagBinding(rootCmd, "agent.server_address", "server-addr", "http://localhost:8080")
+		cmd.SetDefaultAndFlagBinding(rootCmd, "agent.serverAddress", "server-addr", "http://localhost:8080")
+		viper.SetDefault("agent.refreshInterval", 1*time.Second)
 	})
 	if err != nil && !cmd.IsConfigError(err) {
 		fmt.Println(err)
@@ -78,7 +82,7 @@ func init() {
 	cobra.OnInitialize(initConfig)
 
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.garo.yaml)")
-	rootCmd.PersistentFlags().StringVar(&serverAddr, "server-addr", "", "address to garo-server")
+	rootCmd.PersistentFlags().String("server-addr", "", "address to garo-server")
 
 	rootCmd.Flags().BoolP("version", "v", false, "shows version information")
 

@@ -2,6 +2,7 @@ package rpc
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/twitchtv/twirp"
 
@@ -11,8 +12,8 @@ import (
 // Service implements the Garo service
 type Service struct{}
 
-// GetAgentConfiguration returns the action runner configuration for a given repository
-func (s *Service) GetAgentConfiguration(ctx context.Context, r *garo.GetAgentConfigurationRequest) (*garo.AgentConfigurationResponse, error) {
+// GetRepositoryConfiguration returns the action runner configuration for a given repository
+func (s *Service) GetRepositoryConfiguration(ctx context.Context, r *garo.GetRepoConfigurationRequest) (*garo.RepoConfigurationResponse, error) {
 	if r.Organisation == "" {
 		return nil, twirp.InvalidArgumentError("organisation", "You need to mandatory provide a organization")
 	}
@@ -21,7 +22,8 @@ func (s *Service) GetAgentConfiguration(ctx context.Context, r *garo.GetAgentCon
 	}
 
 	// TODO: fetch configuration for repository
-	return &garo.AgentConfigurationResponse{
-		TotalAllowedRunners: 1,
+	return &garo.RepoConfigurationResponse{
+		Repository:           fmt.Sprintf("%s/%s", r.Organisation, r.Repository),
+		MaxConcurrentRunners: 1,
 	}, nil
 }

@@ -1,7 +1,12 @@
 # The server section is only required for garo-server
 server:
-  listen_address: :8080
+  listenAddress: :8080
 
 # The agent section is only required for garo-agent
 agent:
-  server_address: http://localhost:8080
+  serverAddress: http://localhost:8080
+  refreshInterval: 1s
+  repositories:
+    - philips-internal/fact-service
+    - philips-internal/crocs
+    - philips-internal/varys

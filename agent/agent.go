@@ -3,31 +3,28 @@ package agent
 import (
 	"context"
 	"net/http"
+	"time"
 
 	"go.uber.org/zap"
 
+	"github.com/philips-labs/garo/agent/config"
 	"github.com/philips-labs/garo/rpc/garo"
 )
 
 // Config configures the agent
 type Config struct {
-	ServerAddr string
-	Logger     *zap.Logger
+	ServerAddr      string
+	Logger          *zap.Logger
+	RefreshInterval time.Duration
+	Repositories    []string
 }
 
 // Run runs the agent to manage your github action workers
 func Run(ctx context.Context, conf Config) error {
 	client := initClient(conf.ServerAddr)
 
-	cfg, err := client.GetAgentConfiguration(ctx, &garo.GetAgentConfigurationRequest{
-		Organisation: "philips-internal",
-		Repository:   "fact-service",
-	})
-	if err != nil {
-		return err
-	}
-
-	conf.Logger.Info("Agent configuration", zap.Any("cfg", cfg))
+	w := config.NewWatcher(conf.Logger, client, conf.Repositories)
+	go w.Watch(ctx, conf.RefreshInterval)
 
 	return nil
 }

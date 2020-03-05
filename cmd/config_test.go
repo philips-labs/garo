@@ -22,9 +22,11 @@ var (
 	expCfg = func(token string) string {
 		return fmt.Sprintf(`
 config:
-  agent.server_address:   http://localhost:8080
+  agent.refreshinterval:  1s
+  agent.repositories:     ["philips-internal/fact-service", "philips-internal/crocs", "philips-internal/varys"]
+  agent.serveraddress:    http://localhost:8080
   gh_token:               %s
-  server.listen_address:  :8080
+  server.listenaddress:   :8080
 `, token)
 	}
 )
